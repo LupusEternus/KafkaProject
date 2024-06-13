@@ -1,7 +1,6 @@
 package com.wilk.emailnotificationmicroservice.config;
 
 
-import com.wilk.core.ProductCreatedEvent;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +35,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, ProductCreatedEvent> consumerFactory(){
+    public ConsumerFactory<String, Object> consumerFactory(){
         return new DefaultKafkaConsumerFactory<>(configConsumers());
     }
     @Bean
