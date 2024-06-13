@@ -1,8 +1,8 @@
 package com.wilk.productsmicroservice.config;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.wilk.productsmicroservice.service.ProductCreatedEvent;
+
+import com.wilk.core.ProductCreatedEvent;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -37,8 +37,8 @@ public class KafkaConfig {
     public Map<String,Object> producerConfigs(){
         Map<String,Object> config = new HashMap<>();
         config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,bootstrapServer);
-        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerialize.class);
+        config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         config.put(ProducerConfig.ACKS_CONFIG,"all");
         config.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG,120000);
         config.put(ProducerConfig.LINGER_MS_CONFIG,0);
