@@ -1,7 +1,8 @@
 package com.wilk.productsmicroservice.service.impl;
 
+import com.wilk.core.ProductCreatedEvent;
 import com.wilk.productsmicroservice.model.CreateProductRestModel;
-import com.wilk.productsmicroservice.service.ProductCreatedEvent;
+
 import com.wilk.productsmicroservice.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
