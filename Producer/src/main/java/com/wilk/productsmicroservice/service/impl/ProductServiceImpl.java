@@ -5,12 +5,14 @@ import com.wilk.productsmicroservice.model.CreateProductRestModel;
 
 import com.wilk.productsmicroservice.service.ProductService;
 import lombok.AllArgsConstructor;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -49,7 +51,11 @@ public class ProductServiceImpl implements ProductService {
 
         LOGGER.info("Before publishing a ProductCreatedEvent ");
 
-        SendResult<String, ProductCreatedEvent> result = kafkaTemplate.send("product-created-events-topic", productID, productCreatedEvent).get();
+        //producerRecord in allowing us to add header to send by kafka template. Because send method don't allow us to do so, but ProducerRecord yes. And we can pass it to send method
+        ProducerRecord<String,ProductCreatedEvent> record = new ProducerRecord<>("product-created-events-topic",productID,productCreatedEvent);
+        record.headers().add("msgId",UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
+
+        SendResult<String, ProductCreatedEvent> result = kafkaTemplate.send(record).get();
 
         LOGGER.info("Partition: {}",result.getRecordMetadata().partition());
         LOGGER.info("Topic name: {}",result.getRecordMetadata().topic());
