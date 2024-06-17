@@ -28,7 +28,7 @@ public class ProductCreatedHandler {
     private ProcessedEventRepository processedEventRepository;
 
     @KafkaHandler
-    public void handler(@Payload ProductCreatedEvent productCreateEvent, @Header("msgId") String msgId, @Header(KafkaHeaders.RECEIVED_KEY) String messageKey) {
+    public void handler(@Payload ProductCreatedEvent productCreateEvent, @Header("msgId") String msgId) {
 
         if(processedEventRepository.findByMsgId(msgId) != null){
             LOGGER.info("Found duplicate message id: {}",msgId);
